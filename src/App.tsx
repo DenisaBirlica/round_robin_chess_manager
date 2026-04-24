@@ -804,8 +804,10 @@ export default function App() {
                           <tr key={i} className="hover:bg-white/[0.02] transition-colors">
                             <td className="py-2 text-[10px] opacity-40">R{g.round}-B{g.board}</td>
                             <td className="py-2 flex items-center gap-2">
+                              <div className="w-2 h-2 rounded-full bg-white border border-white/20 shrink-0" title="White" />
                               <span className="font-bold whitespace-nowrap">{g.white}</span>
-                              <ChevronRight className="w-3 h-3 opacity-20" />
+                              <ChevronRight className="w-3 h-3 opacity-20 shrink-0" />
+                              <div className="w-2 h-2 rounded-full bg-[#1e293b] border border-white/10 shrink-0" title="Black" />
                               <span className="font-bold whitespace-nowrap">{g.black}</span>
                             </td>
                             <td className="py-2 text-right">
