@@ -787,7 +787,7 @@ export default function App() {
 
                 <Card title="Schedule & Results" icon={Calendar}>
                   <div className="flex justify-between items-center mb-4">
-                    <span className="text-[10px] uppercase font-black text-[#97a6c3] tracking-wider">Matchup <span className="text-[10px] font-medium ml-1.5 opacity-70">(White vs Black)</span></span>
+                    <span className="text-[10px] uppercase font-black text-[#97a6c3] tracking-wider">Results Matrix</span>
                     <button onClick={handleClearResults} className="text-[10px] uppercase font-bold text-rose-400 hover:text-rose-300 flex items-center gap-1"><Eraser className="w-3 h-3" /> Clear Results</button>
                   </div>
                   <div className="max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
@@ -795,7 +795,7 @@ export default function App() {
                       <thead className="sticky top-0 bg-[#11182d] z-20">
                         <tr className="text-[#98a6c3]/40">
                           <th className="pb-2 text-left font-black pr-2">Rnd</th>
-                          <th className="pb-2 text-left font-bold">Matchup</th>
+                          <th className="pb-2 text-left font-bold">Matchup <span className="text-[10px] font-medium opacity-70">(White vs Black)</span></th>
                           <th className="pb-2 text-right">Result</th>
                         </tr>
                       </thead>
