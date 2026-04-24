@@ -1,0 +1,67 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helpers ---
+    function isSignedIn() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isOwner(existingData) {
+      return isSignedIn() && existingData.ownerId == request.auth.uid;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidTournament(data) {
+      return data.tournamentName is string && data.tournamentName.size() <= 200 &&
+             data.tournamentId is string && data.tournamentId.size() <= 128 &&
+             data.formatType in ['single', 'double'] &&
+             data.players is list && data.players.size() <= 64 &&
+             data.games is list && data.games.size() <= 2000 &&
+             data.ownerId is string && data.ownerId.size() <= 128 &&
+             (data.allowGuestEdits == null || data.allowGuestEdits is bool);
+    }
+
+    // --- Collections ---
+    match /tournaments/{tournamentId} {
+      // 3. Path Variable Hardening
+      allow get: if isValidId(tournamentId);
+      
+      // 8. Secure List Queries (Enforce owner filter)
+      allow list: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+
+      allow create: if isSignedIn() && 
+                       isValidId(tournamentId) && 
+                       isValidTournament(incoming()) &&
+                       incoming().ownerId == request.auth.uid &&
+                       incoming().updatedAt == request.time;
+
+      allow update: if isSignedIn() && (
+                       // Tier 1: Owner (Can edit everything)
+                       (isOwner(existing()) && isValidTournament(incoming())) ||
+                       
+                       // Tier 2: Contributor (Full edit if allowed, except owner change)
+                       (existing().allowGuestEdits == true && 
+                        isValidTournament(incoming()) &&
+                        incoming().ownerId == existing().ownerId)
+                    ) && incoming().updatedAt == request.time;
+      
+      allow delete: if isOwner(existing());
+    }
+  }
+}

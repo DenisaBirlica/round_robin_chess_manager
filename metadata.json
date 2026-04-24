@@ -1,0 +1,6 @@
+{
+  "name": "Checkmate Manager",
+  "description": "Round-Robin chess engine. Build a tournament, enter results, and see the standings live.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

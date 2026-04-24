@@ -1,0 +1,40 @@
+{
+  "entities": {
+    "Tournament": {
+      "title": "Tournament",
+      "description": "A chess tournament with its configuration, players, and results.",
+      "type": "object",
+      "properties": {
+        "tournamentName": { "type": "string" },
+        "tournamentId": { "type": "string" },
+        "formatType": { "type": "string", "enum": ["single", "double"] },
+        "players": { "type": "array", "items": { "type": "string" } },
+        "games": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "round": { "type": "number" },
+              "board": { "type": "number" },
+              "white": { "type": "string" },
+              "black": { "type": "string" },
+              "result": { "type": "string", "enum": ["", "1-0", "0.5-0.5", "0-1"] }
+            }
+          }
+        },
+        "ownerId": { "type": "string" },
+        "ownerEmail": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "allowGuestEdits": { "type": "boolean", "description": "Whether guests can edit the tournament scores." }
+      },
+      "required": ["tournamentName", "tournamentId", "formatType", "players", "games", "ownerId"]
+    }
+  },
+  "firestore": {
+    "/tournaments/{tournamentId}": {
+      "schema": "Tournament",
+      "description": "The main tournament document."
+    }
+  }
+}
