@@ -787,7 +787,7 @@ export default function App() {
 
                 <Card title="Schedule & Results" icon={Calendar}>
                   <div className="flex justify-between items-center mb-4">
-                    <span className="text-[10px] uppercase font-black text-[#97a6c3] tracking-wider">Results Matrix</span>
+                    <span className="text-[10px] uppercase font-black text-[#97a6c3] tracking-wider">Matchup <span className="text-[10px] font-medium ml-1.5 opacity-70">(White vs Black)</span></span>
                     <button onClick={handleClearResults} className="text-[10px] uppercase font-bold text-rose-400 hover:text-rose-300 flex items-center gap-1"><Eraser className="w-3 h-3" /> Clear Results</button>
                   </div>
                   <div className="max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
@@ -804,10 +804,10 @@ export default function App() {
                           <tr key={i} className="hover:bg-white/[0.02] transition-colors">
                             <td className="py-2 text-[10px] opacity-40">R{g.round}-B{g.board}</td>
                             <td className="py-2 flex items-center gap-2">
-                              <div className="w-2 h-2 rounded-full bg-white border border-white/20 shrink-0" title="White" />
+                              <div className="w-2 h-2 rounded-full bg-white border border-white/20 shadow-[0_0_5px_rgba(255,255,255,0.3)] shrink-0" title="White" />
                               <span className="font-bold whitespace-nowrap">{g.white}</span>
                               <ChevronRight className="w-3 h-3 opacity-20 shrink-0" />
-                              <div className="w-2 h-2 rounded-full bg-[#1e293b] border border-white/10 shrink-0" title="Black" />
+                              <div className="w-2 h-2 rounded-full bg-[#1e293b] border border-white/10 shadow-[0_0_5px_rgba(0,0,0,0.5)] shrink-0" title="Black" />
                               <span className="font-bold whitespace-nowrap">{g.black}</span>
                             </td>
                             <td className="py-2 text-right">
