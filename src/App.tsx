@@ -251,7 +251,7 @@ export default function App() {
       setFeedback(isExisting ? `Updated tournament: ${tid}` : `Saved as new: ${tid}`);
       if (user) fetchMyTournaments(user.uid);
     } catch (err: any) {
-      handleFirestoreError(err, 'create', tid);
+      setFeedback(err?.message || 'Failed to save. Check your connection.', 'err');
     }
   };
 
@@ -274,7 +274,7 @@ export default function App() {
       setFeedback('Tournament loaded.');
       setShowDataModal(false);
     } catch (err: any) {
-      handleFirestoreError(err, 'get', targetId);
+      setFeedback(err?.message || 'Failed to load. Check the ID and try again.', 'err');
     }
   };
 
