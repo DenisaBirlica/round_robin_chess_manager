@@ -257,13 +257,17 @@ export default function App() {
 
   const handleLoad = async (idToLoad?: string) => {
     const targetId = idToLoad || tournamentIdInput.trim();
+    console.log('handleLoad called, targetId:', targetId);
     if (!targetId) return setFeedback('Enter or select a Tournament ID.', 'err');
     
     try {
+      console.log('Fetching from Firestore...');
       const snap = await getDoc(doc(db, 'tournaments', targetId));
+      console.log('Snap exists:', snap.exists());
       if (!snap.exists()) return setFeedback('Tournament not found.', 'warn');
       
       const data = snap.data() as Tournament;
+      console.log('Data loaded:', JSON.stringify(data).slice(0, 200));
       setTournamentName(data.tournamentName);
       setTournamentIdInput(data.tournamentId);
       setFormatType(data.formatType);
@@ -274,6 +278,7 @@ export default function App() {
       setFeedback('Tournament loaded.');
       setShowDataModal(false);
     } catch (err: any) {
+      console.error('Load error:', err);
       setFeedback(err?.message || 'Failed to load. Check the ID and try again.', 'err');
     }
   };
